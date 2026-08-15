@@ -31,16 +31,14 @@ class TrustScore:
     coherence_score: float
     freshness_score: float
 
+    
     @property
     def total_score(self) -> float:
-        """
-        Calculate the source's overall trust score.
+        """Calculate the source's overall trust score."""
 
-        The weights are fixed in code so that untrusted source data
-        cannot influence or modify the conflict-resolution strategy.
-        """
         return (
             0.60 * self.historical_accuracy
             + 0.25 * self.coherence_score
             + 0.15 * self.freshness_score
         )
+    

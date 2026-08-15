@@ -1,0 +1,10 @@
+{
+    "supplier_a": {
+        "correct": 9,
+        "incorrect": 1
+    },
+    "marketplace_b": {
+        "correct": 7,
+        "incorrect": 3
+    }
+}
