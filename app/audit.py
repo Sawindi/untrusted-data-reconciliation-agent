@@ -13,11 +13,11 @@ class AuditEntry:
     field: str
     source_values: dict[str, object]
     source_scores: dict[str, float]
+    trust_breakdown: dict[str, dict[str, float]]
     selected_source: str
     selected_value: object
     reason: str
     ignored_directives: list[str] = field(default_factory=list)
-
 
 class AuditLog:
     """
@@ -36,6 +36,7 @@ class AuditLog:
         field: str,
         source_values: dict[str, object],
         source_scores: dict[str, float],
+        trust_breakdown: dict[str, dict[str, float]],
         selected_source: str,
         selected_value: object,
         reason: str,
@@ -51,6 +52,7 @@ class AuditLog:
             field=field,
             source_values=source_values,
             source_scores=source_scores,
+            trust_breakdown=trust_breakdown,
             selected_source=selected_source,
             selected_value=selected_value,
             reason=reason,

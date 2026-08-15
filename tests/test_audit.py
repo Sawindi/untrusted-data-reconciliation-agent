@@ -15,6 +15,20 @@ def test_audit_entry_is_recorded():
             "supplier_a": 0.90,
             "marketplace_b": 0.70,
         },
+        trust_breakdown={
+            "supplier_a": {
+                "historical_accuracy": 0.90,
+                "coherence": 1.00,
+                "freshness": 1.00,
+                "total": 0.94,
+            },
+            "marketplace_b": {
+                "historical_accuracy": 0.70,
+                "coherence": 1.00,
+                "freshness": 1.00,
+                "total": 0.82,
+            },
+        },
         selected_source="supplier_a",
         selected_value=999.00,
         reason="Supplier A has the higher trust score.",

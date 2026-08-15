@@ -31,9 +31,26 @@ def print_demo_results(agent: ReconciliationAgent) -> None:
         for source, value in entry.source_values.items():
             print(f"  {source}: {value}")
 
-        print("\nTrust scores:")
-        for source, score in entry.source_scores.items():
-            print(f"  {source}: {score:.3f}")
+        print("\nTrust score breakdown:")
+
+        for source, breakdown in entry.trust_breakdown.items():
+            print(f"\n  {source}")
+            print(
+                f"    Historical accuracy: "
+                f"{breakdown['historical_accuracy']:.3f}"
+            )
+            print(
+                f"    Coherence:           "
+                f"{breakdown['coherence']:.3f}"
+            )
+            print(
+                f"    Freshness:           "
+                f"{breakdown['freshness']:.3f}"
+            )
+            print(
+                f"    Total:               "
+                f"{breakdown['total']:.3f}"
+            )
 
         print(f"\nSelected source: {entry.selected_source}")
         print(f"Selected value: {entry.selected_value}")

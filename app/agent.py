@@ -1,3 +1,5 @@
+from turtle import update
+
 from app.audit import AuditLog
 from app.history import record_outcome
 from app.models import SourceUpdate
@@ -47,6 +49,18 @@ class ReconciliationAgent:
         # 4. Calculate trust scores using fixed system rules.
         winner, scores = choose_winner(valid_updates)
 
+        trust_breakdown = {}
+
+        for update in valid_updates:
+            trust_score = calculate_trust_score(update)
+
+            trust_breakdown[update.source_id] = {
+                "historical_accuracy": trust_score.historical_accuracy,
+                "coherence": trust_score.coherence_score,
+                "freshness": trust_score.freshness_score,
+                "total": trust_score.total_score,
+            }
+
         # 5. Update the reconciled state.
         self.state.update(winner.product)
 
@@ -66,6 +80,7 @@ class ReconciliationAgent:
                 field=field,
                 source_values=source_values,
                 source_scores=scores,
+                trust_breakdown=trust_breakdown,
                 selected_source=winner.source_id,
                 selected_value=getattr(winner.product, field),
                 reason=(
