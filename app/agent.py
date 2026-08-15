@@ -1,4 +1,5 @@
 from app.audit import AuditLog
+from app.history import record_outcome
 from app.models import SourceUpdate
 from app.reconciler import choose_winner, detect_conflicts
 from app.state import ReconciledState
@@ -72,6 +73,23 @@ class ReconciliationAgent:
                 ),
                 ignored_directives=ignored_directives,
             )
+
+    def verify_source_outcome(
+        self,
+        source_id: str,
+        was_correct: bool,
+    ) -> None:
+        """
+        Update historical accuracy using an independently verified outcome.
+
+        The reconciliation winner is not automatically considered correct.
+        Historical accuracy changes only when an external verification result is explicitly provided to the system.
+        """
+
+        record_outcome(
+            source_id=source_id,
+            was_correct=was_correct,
+        )
 
     def _store_consistent_state(
         self,
