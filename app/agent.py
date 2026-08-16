@@ -1,5 +1,3 @@
-from turtle import update
-
 from app.audit import AuditLog
 from app.history import record_outcome
 from app.models import SourceUpdate
