@@ -5,7 +5,12 @@ from app.history import record_outcome
 from app.models import SourceUpdate
 from app.reconciler import choose_winner, detect_conflicts
 from app.state import ReconciledState
-from app.trust import calculate_trust_score
+from app.trust import (
+    HISTORICAL_ACCURACY_WEIGHT,
+    COHERENCE_WEIGHT,
+    FRESHNESS_WEIGHT,
+    calculate_trust_score,
+)
 from app.validator import validate_update
 
 
@@ -84,7 +89,13 @@ class ReconciliationAgent:
                 selected_source=winner.source_id,
                 selected_value=getattr(winner.product, field),
                 reason=(
-                    f"{winner.source_id} was selected because it had the highest trust score under the fixed reconciliation strategy."
+                    f"{winner.source_id} was selected because its total trust "
+                    f"score ({scores[winner.source_id]:.3f}) was the highest. "
+                    f"The fixed strategy weights historical accuracy at "
+                    f"{HISTORICAL_ACCURACY_WEIGHT:.0%}, coherence at "
+                    f"{COHERENCE_WEIGHT:.0%}, and freshness at "
+                    f"{FRESHNESS_WEIGHT:.0%}. "
+                    f"Source content cannot modify these rules."
                 ),
                 ignored_directives=ignored_directives,
             )

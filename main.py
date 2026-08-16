@@ -1,5 +1,10 @@
 from app.agent import ReconciliationAgent
 from app.sources import fetch_all_sources
+from app.trust import (
+    HISTORICAL_ACCURACY_WEIGHT,
+    COHERENCE_WEIGHT,
+    FRESHNESS_WEIGHT,
+)
 
 
 def print_demo_results(agent: ReconciliationAgent) -> None:
@@ -86,6 +91,20 @@ def main() -> None:
             print(f"Metadata: {update.metadata}")
 
     print("\nRunning reconciliation...")
+
+    print("\nFixed trust strategy:")
+    print(
+        f"  Historical accuracy: "
+        f"{HISTORICAL_ACCURACY_WEIGHT:.0%}"
+    )
+    print(
+        f"  Coherence:           "
+        f"{COHERENCE_WEIGHT:.0%}"
+    )
+    print(
+        f"  Freshness:           "
+        f"{FRESHNESS_WEIGHT:.0%}"
+    )
 
     agent = ReconciliationAgent()
     agent.reconcile(updates)
